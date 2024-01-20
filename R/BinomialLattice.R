@@ -1,4 +1,4 @@
-binomialLattice <- function(n, S0, K, r, sigma, T, optionType, exerciseType, u = NA, d = NA) {
+binomialLattice <- function(n, S0, K, r, sigma = NA, T, optionType, exerciseType, u = NA, d = NA) {
   #' n = Anzahl Perioden
   #' S0 = Heutige Aktienpreis
   #' K = Strike
@@ -9,13 +9,17 @@ binomialLattice <- function(n, S0, K, r, sigma, T, optionType, exerciseType, u =
   #' u = Preissprung nach oben
   #' d = Preissprung nach unten
   
-  # Zeitschritte anwenden
+  #' Zeitschritte anwenden
   dt <- 1 / T
   R <- (1 + (r/T))
-  # Berechne Preissprünge oben/unten
+  #' Berechne Preissprünge oben/unten
   if (is.na(u) || is.na(d)) {
     u <- exp(sigma * sqrt(dt))
     d <- 1 / u
+  }
+  #' Sollte sigma nicht gegeben sein:
+  is (is.na(sigma)) {
+    sigma <- log(u)*sqrt(T)
   }
   
   # Risikoneutraler Zins
@@ -58,5 +62,5 @@ binomialLattice <- function(n, S0, K, r, sigma, T, optionType, exerciseType, u =
   }
   
   
-  return(list(R=R,dt=dt,u=u,d=d,p=p, assetlattice = stockPrices, optionValues = optionValues))
+  return(list(R=R, dt=dt, u=u, d=d, p=p, sigma=sigma, assetlattice = stockPrices, optionValues = optionValues))
 }
