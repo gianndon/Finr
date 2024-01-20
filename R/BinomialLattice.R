@@ -18,7 +18,7 @@ binomialLattice <- function(n, S0, K, r, sigma = NA, T, optionType, exerciseType
     d <- 1 / u
   }
   #' Sollte sigma nicht gegeben sein:
-  is (is.na(sigma)) {
+  if (is.na(sigma)) {
     sigma <- log(u)*sqrt(T)
   }
   
