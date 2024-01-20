@@ -1,5 +1,5 @@
-# investor ist bullisch gegenüber einer Aktia eingestellt. 
-# er glaubt die Aktie wird in Zukunft steigen. 
+# investor ist bullisch gegenüber einer Aktia eingestellt.
+# er glaubt die Aktie wird in Zukunft steigen.
 # Call-Option mit Ausübungspreis K1 kaufen
 # zweite Call-Option mit Ausübungspreis K2 VERkaufen, diese ist billiger
 
@@ -7,7 +7,7 @@
 # Wert C2 = max(0, S-K2)
 # Bulischer Spread: C1 - C2 = max(0, S-K1) - max(0, S-K2)
 
-bulischer.spread <- function(S, K1, K2){
+bullischer_spread <- function(S, K1, K2){
   C1 <- apply(matrix(S-K1), MARGIN = 1, function(x) max(0, x))
   C2 <- apply(matrix(S-K2), MARGIN = 1, function(x) max(0, x))
   bs <- C1 - C2
