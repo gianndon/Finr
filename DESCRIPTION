@@ -7,6 +7,6 @@ Maintainer: The package maintainer <gianndon@students.zhaw.ch>
 Description: This R-Package contains various functions to compute
     financial mathematical calculations, for instance the Black
     Scholes Formula, Greeks, etc.
-License: No Licence Available. ABSOLUTELY NO WARRANTY.
+License: FALSE
 Encoding: UTF-8
 LazyData: true
