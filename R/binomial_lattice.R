@@ -1,4 +1,4 @@
-binomialLattice <- function(n, S0, K, r, sigma = NA, T, optionType, exerciseType, u = NA, d = NA) {
+binomial_lattice <- function(n, S0, K, r, sigma = NA, T, optionType, exerciseType, u = NA, d = NA) {
   #' n = Anzahl Perioden
   #' S0 = Heutige Aktienpreis
   #' K = Strike
@@ -8,7 +8,7 @@ binomialLattice <- function(n, S0, K, r, sigma = NA, T, optionType, exerciseType
   #' exerciseType = Eu/Ami
   #' u = Preissprung nach oben
   #' d = Preissprung nach unten
-  
+
   #' Zeitschritte anwenden
   dt <- 1 / T
   R <- (1 + (r/T))
@@ -21,21 +21,21 @@ binomialLattice <- function(n, S0, K, r, sigma = NA, T, optionType, exerciseType
   if (is.na(sigma)) {
     sigma <- log(u)*sqrt(T)
   }
-  
+
   # Risikoneutraler Zins
   p <- (R - d) / (u - d)
-  
+
   # Init. Matrix für stonks
   stockPrices <- matrix(0, nrow = n + 1, ncol = n + 1)
   optionValues <- matrix(0, nrow = n + 1, ncol = n + 1)
-  
+
   # Befüllen von Binomialgitter
   for (i in 0:n) {
     for (j in 0:i) {
       stockPrices[j + 1, i + 1] <- S0 * u^j * d^(i - j)
     }
   }
-  
+
   # Optionswerte bei Fälligkeit
   for (j in 0:n) {
     stockPrice <- stockPrices[j + 1, n + 1]
@@ -45,7 +45,7 @@ binomialLattice <- function(n, S0, K, r, sigma = NA, T, optionType, exerciseType
       optionValues[j + 1, n + 1] <- max(K - stockPrice, 0)
     }
   }
-  
+
   # Derivatpreis Rückwärts rechnen
   for (i in (n - 1):0) {
     for (j in 0:i) {
@@ -60,7 +60,7 @@ binomialLattice <- function(n, S0, K, r, sigma = NA, T, optionType, exerciseType
       }
     }
   }
-  
-  
+
+
   return(list(R=R, dt=dt, u=u, d=d, p=p, sigma=sigma, assetlattice = stockPrices, optionValues = optionValues))
 }
