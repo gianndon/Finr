@@ -1,13 +1,15 @@
-binomialLattice <- function(n, S0, K, r, sigma = NA, T, optionType, exerciseType, u = NA, d = NA) {
+binomialLattice <- function(n, S0, K, r, v, sigma = NA, T, optionType, exerciseType, u = NA, d = NA) {
   #' n = Anzahl Perioden
   #' S0 = Heutige Aktienpreis
   #' K = Strike
   #' sigma = Volatilität
-  #' T = Fälligkeit
+  #' T = Periodizität: quartalsweise : T= 4, halbjährlich T = 2
   #' optionType = Call/Put
-  #' exerciseType = Eu/Ami
+  #' exerciseType = Eu/Ami für Ami --> "American"
   #' u = Preissprung nach oben
   #' d = Preissprung nach unten
+  #' r = risikofreier Zins
+  #' v = erwarte Wachstumsrate der log-preise
   
   #' Zeitschritte anwenden
   dt <- 1 / T
@@ -21,6 +23,9 @@ binomialLattice <- function(n, S0, K, r, sigma = NA, T, optionType, exerciseType
   if (is.na(sigma)) {
     sigma <- log(u)*sqrt(T)
   }
+  
+  # p ausrechnen:
+  p <- 0.5 + 0.5*(v/sigma) * sqrt(dt)
   
   # Risikoneutraler Zins
   q <- (R - d) / (u - d)
@@ -62,5 +67,13 @@ binomialLattice <- function(n, S0, K, r, sigma = NA, T, optionType, exerciseType
   }
   
   
-  return(list(R=R, dt=dt, u=u, d=d, q=q, sigma=sigma, assetlattice = stockPrices, optionValues = optionValues))
+  return(list(R=R, dt=dt, u=u, d=d, p=p, q=q, sigma=sigma, assetlattice = stockPrices, optionValues = optionValues))
 }
+
+
+
+
+
+
+
+

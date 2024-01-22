@@ -10,3 +10,4 @@ Description: This R-Package contains various functions to compute
 License: FALSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.2.3
